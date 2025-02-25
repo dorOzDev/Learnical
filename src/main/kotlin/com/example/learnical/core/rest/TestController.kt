@@ -16,13 +16,13 @@ class TestController(val lyricProcessor: LyricProcessor) {
     fun getRomajiLyrics(@RequestBody body: String) : String {
         val processLyrics = lyricProcessor.processLyrics(body)
         val sb = StringBuilder()
-        processLyrics.forEach({tokenWrapper ->
+        processLyrics.forEach{tokenWrapper ->
             if(tokenWrapper is RomajiTokenWrapper) {
                 sb.append(tokenWrapper.romajiReading)
             } else {
                 sb.append(tokenWrapper.token.surface)
             }
-        })
+        }
 
         return sb.toString()
     }
