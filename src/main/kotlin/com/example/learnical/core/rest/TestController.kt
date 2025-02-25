@@ -1,5 +1,6 @@
 package com.example.learnical.core.rest
 
+import com.example.learnical.core.persistence.RomajiTokenWrapper
 import com.example.learnical.core.process.LyricProcessor
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -12,7 +13,17 @@ class TestController(val lyricProcessor: LyricProcessor) {
 
 
     @PostMapping("/lyrics")
-    fun getRomajiLyrics(@RequestBody body: String) {
-        lyricProcessor.processLyrics(body)
+    fun getRomajiLyrics(@RequestBody body: String) : String {
+        val processLyrics = lyricProcessor.processLyrics(body)
+        val sb = StringBuilder()
+        processLyrics.forEach({tokenWrapper ->
+            if(tokenWrapper is RomajiTokenWrapper) {
+                sb.append(tokenWrapper.romajiReading)
+            } else {
+                sb.append(tokenWrapper.token.surface)
+            }
+        })
+
+        return sb.toString()
     }
 }
