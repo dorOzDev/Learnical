@@ -1,13 +1,15 @@
 package com.example.learnical.core.converter
 
 import com.atilika.kuromoji.ipadic.Token
-import fr.free.nrw.jakaroma.KanaToRomaji
+import com.github.jikyo.romaji.Transliterator
 import org.springframework.stereotype.Service
 
 @Service
 class RomajiConverterImpl : RomajiConverter {
 
-    val kanaToRomaji = KanaToRomaji()
 
-    override fun getRomajiReading(token: Token): String = kanaToRomaji.convert(token.reading)
+    override fun getRomajiReading(token: Token): String? {
+        val transliterateList = Transliterator.transliterate(token.reading)
+        return if (transliterateList.size > 0) transliterateList.get(0) else null
+    }
 }

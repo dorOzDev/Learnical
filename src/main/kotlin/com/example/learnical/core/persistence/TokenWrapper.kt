@@ -1,7 +1,16 @@
 package com.example.learnical.core.persistence
 
-import com.atilika.kuromoji.ipadic.Token
+interface TokenWrapper<T> {
+    val token : T
 
-interface TokenWrapper {
-    val token: Token
+    /**
+     * return the original token
+     * */
+    fun getOriginToken() : T = token
+
+    /**
+     * returns the reading of the token
+     * */
+    fun getReading() : String
+
 }
