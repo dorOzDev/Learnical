@@ -30,7 +30,7 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: LyricProcessor, va
     override fun searchSongToRomaji(lyricName: String): String {
         LOGGER.info("search for song: $lyricName")
         val searchSongLyricLink = searchSongApi.searchSongLyricLink(lyricName)
-        val document = Jsoup.connect("https://genius.com/Genius-romanizations-yuzu-hyori-ittai-romanized-lyrics")
+        val document = Jsoup.connect(searchSongLyricLink!!.getLyricResult())
             .userAgent("chrome")
             .get()
         return webScrapper.scrapRelatedSong(document)

@@ -4,9 +4,11 @@ import com.example.learnical.core.searchsongapi.AbstractSearchSongsApi
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatusCode
 import org.springframework.web.client.RestTemplate
 
 class GeniusSearchSongsApi(restTemplate: RestTemplate) : AbstractSearchSongsApi(restTemplate) {
+
 
     override fun searchSongLyricLink(songName: String): SearchSongResult? {
         val headers = HttpHeaders()
@@ -14,7 +16,12 @@ class GeniusSearchSongsApi(restTemplate: RestTemplate) : AbstractSearchSongsApi(
         val entity = HttpEntity("", headers)
         val url = "https://api.genius.com/search?q=Hyori Ittai romanized"
         val exchange = restTemplate.exchange(url, HttpMethod.GET, entity, GeniusSearchSongResult::class.java)
-        val body = exchange.body
-        return body
+
+        if(exchange.statusCode == HttpStatusCode.valueOf(200)) {
+            val body = exchange.body
+            return body
+        }
+
+        return null
     }
 }

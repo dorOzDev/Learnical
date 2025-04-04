@@ -27,7 +27,6 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
         }
     }
 
-
     @PostMapping("/romajiiconverter")
     fun convertToRomaji(@RequestBody body: String) : ResponseEntity<out Any> {
         LOGGER.info("converting to romaji")
