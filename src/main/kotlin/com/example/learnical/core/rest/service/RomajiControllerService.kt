@@ -12,9 +12,14 @@ interface RomajiControllerService {
     fun convertToRomaji(lyric : String) : String
 
     /**
-     * serach for the lyric by the lyric name for any lyrics api site, and returns a romanized version out of it.
+     * serach for the lyric by the lyric name for any lyrics api site.
+     * @return a pair of Boolean and String represent if the song was found and the song as a string.
      * this api depends on credential for the given api site.
      * */
     @Throws(RuntimeException::class)
-    fun searchSongToRomaji(lyricName : String) : String
+    fun searchSongToRomaji(songName : String) : Pair<Boolean, String>
+
+    object Constant {
+        val SONG_NOT_FOUND_PAIR = Pair(false, "")
+    }
 }

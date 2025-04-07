@@ -27,12 +27,18 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: LyricProcessor, va
         return sb.toString()
     }
 
-    override fun searchSongToRomaji(lyricName: String): String {
-        LOGGER.info("search for song: $lyricName")
-        val searchSongLyricLink = searchSongApi.searchSongLyricLink(lyricName)
-        val document = Jsoup.connect(searchSongLyricLink!!.getLyricResult())
-            .userAgent("chrome")
-            .get()
-        return webScrapper.scrapRelatedSong(document)
+    override fun searchSongToRomaji(songName: String): Pair<Boolean, String> {
+        LOGGER.info("search for song: $songName")
+        val searchSongLyricLink = searchSongApi.searchSongLyricLink(songName)
+
+        return if(searchSongLyricLink == null) {
+            LOGGER.info(String.format("couldn't find a song with name: %s", songName))
+            RomajiControllerService.Constant.SONG_NOT_FOUND_PAIR
+        } else {
+            val document = Jsoup.connect(searchSongLyricLink.getLyricResult())
+                .userAgent("chrome")
+                .get()
+            return Pair(true, webScrapper.scrapRelatedSong(document))
+        }
     }
 }
