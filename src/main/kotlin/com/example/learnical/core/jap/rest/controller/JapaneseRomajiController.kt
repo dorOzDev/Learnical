@@ -1,7 +1,8 @@
-package com.example.learnical.core.rest.controller
+package com.example.learnical.core.jap.rest.controller
 
 import com.example.learnical.core.common.logger
-import com.example.learnical.core.rest.service.JapaneseRomajiControllerService
+import com.example.learnical.core.jap.rest.service.JapaneseRomajiControllerService
+import com.example.learnical.core.jap.rest.service.RomajiControllerService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/jap")
+@RequestMapping("/jap")
 class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerService) {
 
     val LOGGER by logger()
@@ -20,13 +21,17 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
     fun searchRomajiLyrics(@RequestParam(name = "song_name") songName : String) : ResponseEntity<out Any> {
         LOGGER.info("search for song: $songName")
         try {
-            return ResponseEntity.ok(controllerService.searchSongToRomaji(songName))
+            val res = controllerService.searchSongToRomaji(songName)
+            return if(!res.first) {
+                ResponseEntity.notFound().build()
+            } else {
+                ResponseEntity.ok(res.second)
+            }
         } catch (e : Exception) {
             LOGGER.error("something went wrong with searching for the song name: ${e.message}")
             return ResponseEntity.internalServerError().build<Void>()
         }
     }
-
 
     @PostMapping("/romajiiconverter")
     fun convertToRomaji(@RequestBody body: String) : ResponseEntity<out Any> {

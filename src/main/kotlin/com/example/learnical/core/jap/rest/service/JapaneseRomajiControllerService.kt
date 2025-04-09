@@ -1,4 +1,4 @@
-package com.example.learnical.core.rest.service
+package com.example.learnical.core.jap.rest.service
 
 interface JapaneseRomajiControllerService : RomajiControllerService {
 }
