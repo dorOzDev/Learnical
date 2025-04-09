@@ -43,9 +43,4 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
          return ResponseEntity.internalServerError().build<Void>()
         }
     }
-
-    @GetMapping("/geniuscallback")
-    fun geniusApiCallback(@RequestParam("code") code : String, @RequestParam("state") state :String) {
-        println("here")
-    }
 }
