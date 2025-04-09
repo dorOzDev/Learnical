@@ -1,6 +1,8 @@
 package com.example.learnical.core.searchsongapi.genius.rest.controller
 
 import com.example.learnical.core.common.logger
+import com.example.learnical.core.searchsongapi.AuthorizationToken
+import com.example.learnical.core.searchsongapi.genius.model.GeniusJWT
 import com.example.learnical.core.searchsongapi.genius.rest.service.GeniusAuthorizationControllerService
 import com.example.learnical.core.user.UserService
 import org.springframework.http.ResponseEntity
@@ -37,7 +39,5 @@ class GeniusAuthorizationController(val controllerService : GeniusAuthorizationC
         return ResponseEntity.ok().build()
     }
 
-    data class GeniusJWT(
-        val accessToken : String,
-        val tokenType : String?)
+
 }
