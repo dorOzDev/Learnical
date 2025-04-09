@@ -1,4 +1,4 @@
-package com.example.learnical.core.rest.service
+package com.example.learnical.core.jap.rest.service
 
 import java.lang.RuntimeException
 import kotlin.jvm.Throws

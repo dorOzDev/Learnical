@@ -1,8 +1,8 @@
-package com.example.learnical.core.rest.controller
+package com.example.learnical.core.jap.rest.controller
 
 import com.example.learnical.core.common.logger
-import com.example.learnical.core.rest.service.JapaneseRomajiControllerService
-import com.example.learnical.core.rest.service.RomajiControllerService
+import com.example.learnical.core.jap.rest.service.JapaneseRomajiControllerService
+import com.example.learnical.core.jap.rest.service.RomajiControllerService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/jap")
+@RequestMapping("/jap")
 class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerService) {
 
     val LOGGER by logger()
@@ -42,5 +42,10 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
          LOGGER.error("something went wrong with conversion: ${e.message}")
          return ResponseEntity.internalServerError().build<Void>()
         }
+    }
+
+    @GetMapping("/geniuscallback")
+    fun geniusApiCallback(@RequestParam("code") code : String, @RequestParam("state") state :String) {
+        println("here")
     }
 }

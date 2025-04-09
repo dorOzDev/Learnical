@@ -1,4 +1,4 @@
-package com.example.learnical.core.rest.service
+package com.example.learnical.core.jap.rest.service
 
 import com.example.learnical.core.common.logger
 import com.example.learnical.core.persistence.jap.JapaneseTokenWrapperImpl
@@ -9,7 +9,8 @@ import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 
 @Service
-class JapaneseRomajiControllerServiceImpl(val lyricProcessor: LyricProcessor, val webScrapper: WebScrapper, val searchSongApi : SearchSongsApi) : JapaneseRomajiControllerService {
+class JapaneseRomajiControllerServiceImpl(val lyricProcessor: LyricProcessor, val webScrapper: WebScrapper, val searchSongApi : SearchSongsApi) :
+    JapaneseRomajiControllerService {
 
     val LOGGER by logger()
 
