@@ -1,7 +1,6 @@
-package com.example.learnical.core
+package com.example.learnical
 
 
-import org.jsoup.Jsoup
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 

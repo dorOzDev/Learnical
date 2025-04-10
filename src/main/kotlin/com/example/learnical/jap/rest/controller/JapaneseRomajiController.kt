@@ -1,8 +1,7 @@
-package com.example.learnical.core.jap.rest.controller
+package com.example.learnical.jap.rest.controller
 
 import com.example.learnical.core.common.logger
-import com.example.learnical.core.jap.rest.service.JapaneseRomajiControllerService
-import com.example.learnical.core.jap.rest.service.RomajiControllerService
+import com.example.learnical.jap.rest.service.JapaneseRomajiControllerService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
