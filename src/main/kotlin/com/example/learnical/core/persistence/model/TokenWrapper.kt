@@ -1,4 +1,4 @@
-package com.example.learnical.core.persistence
+package com.example.learnical.core.persistence.model
 
 interface TokenWrapper<T> {
     val token : T

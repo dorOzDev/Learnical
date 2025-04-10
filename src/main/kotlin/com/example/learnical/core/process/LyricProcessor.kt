@@ -1,11 +1,11 @@
 package com.example.learnical.core.process
 
-import com.example.learnical.core.persistence.jap.JapaneseTokenWrapper
+import com.example.learnical.core.persistence.model.TokenWrapper
 
-interface LyricProcessor {
+interface LyricProcessor<T> {
 
     /**
      * converts a lyric in it's native language and returns a list of token
      * */
-    fun processLyrics(lyric: String) : List<JapaneseTokenWrapper>
+    fun processLyrics(lyric: String) : List<TokenWrapper<T>>
 }

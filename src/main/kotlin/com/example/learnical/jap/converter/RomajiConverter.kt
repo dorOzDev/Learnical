@@ -1,4 +1,4 @@
-package com.example.learnical.core.converter
+package com.example.learnical.jap.converter
 
 import com.atilika.kuromoji.ipadic.Token
 
