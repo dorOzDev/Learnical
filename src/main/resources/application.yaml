@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: demo
+  security:
+    oauth2:
+        resourceserver:
+          jwt:
+            issuer-uri: http://localhost:8443/realms/learnical
+
+
+server:
+  servlet:
+    context-path: /api
+
