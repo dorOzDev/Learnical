@@ -11,9 +11,9 @@ services:
     command:
       - start-dev
 
-  app:
-    build: .
-    ports:
-      - "8080:8082"
-    depends_on:
-      - keycloak
+#  app:
+#    build: .
+#    ports:
+#      - "8080:8082"
+#    depends_on:
+#      - keycloak
