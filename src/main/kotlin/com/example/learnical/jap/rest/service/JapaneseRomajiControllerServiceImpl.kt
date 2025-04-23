@@ -36,8 +36,9 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
             logger.info(String.format("couldn't find a song with name: %s", songName))
             RomajiControllerService.Constant.SONG_NOT_FOUND_PAIR
         } else {
+            logger.info("getting html page for song $songName, from link ${searchSongLyricLink.getLyricResult()}")
             val document = Jsoup.connect(searchSongLyricLink.getLyricResult())
-                .userAgent("chrome")
+                .userAgent("Mozilla")
                 .get()
             return Pair(true, webScrapper.scrapRelatedSong(document))
         }

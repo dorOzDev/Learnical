@@ -44,6 +44,6 @@ class GeniusSearchSongsApi(restTemplate: RestTemplate, val geniusStore: Authoriz
 
     private object GeniusApiUrl {
         const val SEARCH_URL = "https://api.genius.com/search?q=%s"
-        const val ROMANIZED = "romannized";
+        const val ROMANIZED = "romannized"
     }
 }
