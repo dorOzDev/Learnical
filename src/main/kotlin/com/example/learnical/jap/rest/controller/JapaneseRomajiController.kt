@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/jap")
 class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerService) {
 
-    val LOGGER by logger()
+    val logger by logger()
 
     @GetMapping("/search")
     fun searchRomajiLyrics(@RequestParam(name = "song_name") songName : String) : ResponseEntity<out Any> {
-        LOGGER.info("search for song: $songName")
+        logger.info("searching song: $songName")
         try {
             val res = controllerService.searchSongToRomaji(songName)
             return if(!res.first) {
@@ -27,18 +27,18 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
                 ResponseEntity.ok(res.second)
             }
         } catch (e : Exception) {
-            LOGGER.error("something went wrong with searching for the song name: ${e.message}")
+            logger.error("something went wrong with searching for the song name: ${e.message}")
             return ResponseEntity.internalServerError().build<Void>()
         }
     }
 
     @PostMapping("/romajiiconverter")
     fun convertToRomaji(@RequestBody body: String) : ResponseEntity<out Any> {
-        LOGGER.info("converting to romaji")
+        logger.info("converting to romaji")
         try {
             return ResponseEntity.ok(controllerService.convertToRomaji(body))
         } catch (e : Exception) {
-         LOGGER.error("something went wrong with conversion: ${e.message}")
+         logger.error("something went wrong with conversion: ${e.message}")
          return ResponseEntity.internalServerError().build<Void>()
         }
     }

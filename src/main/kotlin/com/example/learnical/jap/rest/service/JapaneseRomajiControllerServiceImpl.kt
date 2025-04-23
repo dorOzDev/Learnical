@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProcessor, val webScrapper: WebScrapper, val searchSongApi : SearchSongsApi) :
     JapaneseRomajiControllerService {
 
-    val LOGGER by logger()
+    val logger by logger()
 
     override fun convertToRomaji(lyric: String): String {
         val processLyrics = lyricProcessor.processLyrics(lyric)
@@ -29,11 +29,11 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
     }
 
     override fun searchSongToRomaji(songName: String): Pair<Boolean, String> {
-        LOGGER.info("search for song: $songName")
+        logger.info("search for song: $songName")
         val searchSongLyricLink = searchSongApi.searchSongLyricLink(songName)
 
         return if(searchSongLyricLink == null) {
-            LOGGER.info(String.format("couldn't find a song with name: %s", songName))
+            logger.info(String.format("couldn't find a song with name: %s", songName))
             RomajiControllerService.Constant.SONG_NOT_FOUND_PAIR
         } else {
             val document = Jsoup.connect(searchSongLyricLink.getLyricResult())

@@ -14,16 +14,18 @@ import org.springframework.web.client.RestTemplate
 
 class GeniusSearchSongsApi(restTemplate: RestTemplate, val geniusStore: AuthorizationStore<GeniusJWT>, val userService: UserService) : AbstractSearchSongsApi(restTemplate) {
 
-    val LOGGER by logger()
+    val logger by logger()
 
     override fun searchSongLyricLink(songName: String): SearchSongResult? {
+        logger.info("searching for link of song: $songName")
         val headers : HttpHeaders = createHeaders()
         val entity = HttpEntity("", headers)
         val wellFormattedSongName = if (songName.contains(ROMANIZED)) songName else songName.plus(" $ROMANIZED")
         val url = String.format(GeniusApiUrl.SEARCH_URL, wellFormattedSongName)
         val exchange = restTemplate.exchange(url, HttpMethod.GET, entity, GeniusSearchSongResult::class.java)
-
+        logger.info("searching for link of song: $songName returned with status code: ${exchange.statusCode}")
         if(exchange.statusCode == HttpStatusCode.valueOf(200)) {
+            logger.debug("searching for link of song: {} failed due to: {}", songName, exchange.body)
             val body = exchange.body
             return body
         }
