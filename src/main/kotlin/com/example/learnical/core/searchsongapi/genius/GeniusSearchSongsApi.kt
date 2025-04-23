@@ -25,11 +25,11 @@ class GeniusSearchSongsApi(restTemplate: RestTemplate, val geniusStore: Authoriz
         val exchange = restTemplate.exchange(url, HttpMethod.GET, entity, GeniusSearchSongResult::class.java)
         logger.info("searching for link of song: $songName returned with status code: ${exchange.statusCode}")
         if(exchange.statusCode == HttpStatusCode.valueOf(200)) {
-            logger.debug("searching for link of song: {} failed due to: {}", songName, exchange.body)
             val body = exchange.body
             return body
         }
 
+        logger.debug("searching for link of song: {} failed due to: {}", songName, exchange.body)
         return null
     }
 
