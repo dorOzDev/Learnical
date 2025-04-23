@@ -39,7 +39,12 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
             logger.info("getting html page for song $songName, from link ${searchSongLyricLink.getLyricResult()}")
             val document = Jsoup.connect(searchSongLyricLink.getLyricResult())
                 .userAgent("Mozilla")
-                .cookie("cookie", "dummy")
+                .header("Accept-Language", "en-US,en;q=0.9")
+                .header("Accept", "text/html")
+                .header("Connection", "keep-alive")
+                .header("Upgrade-Insecure-Requests", "1")
+                .header("Cache-Control", "max-age=0")
+                .referrer("https://www.google.com")
                 .get()
             return Pair(true, webScrapper.scrapRelatedSong(document))
         }
