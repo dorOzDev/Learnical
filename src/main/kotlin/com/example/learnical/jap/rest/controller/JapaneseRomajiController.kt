@@ -2,6 +2,7 @@ package com.example.learnical.jap.rest.controller
 
 import com.example.learnical.core.common.logger
 import com.example.learnical.jap.rest.service.JapaneseRomajiControllerService
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,7 +17,7 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
 
     val logger by logger()
 
-    @GetMapping("/search")
+    @GetMapping("/search", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun searchRomajiLyrics(@RequestParam(name = "song_name") songName : String) : ResponseEntity<out Any> {
         logger.info("searching song: $songName")
         try {
@@ -32,7 +33,7 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
         }
     }
 
-    @PostMapping("/romajiiconverter")
+    @PostMapping("/romajiiconverter", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun convertToRomaji(@RequestBody body: String) : ResponseEntity<out Any> {
         logger.info("converting to romaji")
         try {

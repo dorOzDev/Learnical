@@ -5,6 +5,8 @@ import com.example.learnical.jap.model.JapaneseTokenWrapper
 import com.example.learnical.jap.processor.JapaneseLyricsProcessor
 import com.example.learnical.core.searchsongapi.SearchSongsApi
 import com.example.learnical.core.searchsongapi.WebScrapper
+import com.example.learnical.core.searchsongapi.model.ConvertionToRomajiResult
+import com.example.learnical.core.searchsongapi.model.SearchSongData
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 
@@ -14,7 +16,7 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
 
     val logger by logger()
 
-    override fun convertToRomaji(lyric: String): String {
+    override fun convertToRomaji(lyric: String): ConvertionToRomajiResult {
         val processLyrics = lyricProcessor.processLyrics(lyric)
         val sb = StringBuilder()
         processLyrics.forEach{tokenWrapper ->
@@ -25,10 +27,10 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
             }
         }
 
-        return sb.toString()
+        return ConvertionToRomajiResult(sb.toString())
     }
 
-    override fun searchSongToRomaji(songName: String): Pair<Boolean, String> {
+    override fun searchSongToRomaji(songName: String): Pair<Boolean, SearchSongData> {
         logger.info("search for song: $songName")
         val searchSongLyricLink = searchSongApi.searchSongLyricLink(songName)
 
@@ -36,8 +38,8 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
             logger.info(String.format("couldn't find a song with name: %s", songName))
             RomajiControllerService.Constant.SONG_NOT_FOUND_PAIR
         } else {
-            logger.info("getting html page for song $songName, from link ${searchSongLyricLink.getLyricResult()}")
-            val document = Jsoup.connect(searchSongLyricLink.getLyricResult())
+            logger.info("getting html page for song $songName, from link ${searchSongLyricLink.getSongApiUrl()}")
+            val document = Jsoup.connect(searchSongLyricLink.getSongApiUrl())
                 .userAgent("Mozilla")
                 .header("Accept-Language", "en-US,en;q=0.9")
                 .header("Accept", "text/html")
@@ -46,7 +48,8 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
                 .header("Cache-Control", "max-age=0")
                 .referrer("https://www.google.com")
                 .get()
-            return Pair(true, webScrapper.scrapRelatedSong(document))
+            val second = SearchSongData(songName, searchSongLyricLink.getSongApiUrl(), webScrapper.scrapRelatedSong(document))
+            return Pair(true, second)
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.learnical.core.searchsongapi
 
-import com.example.learnical.core.searchsongapi.genius.SearchSongResult
+import com.example.learnical.core.searchsongapi.model.SearchSongResult
 
 interface SearchSongsApi {
 
