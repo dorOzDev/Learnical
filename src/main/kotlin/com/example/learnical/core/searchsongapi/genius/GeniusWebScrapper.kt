@@ -8,18 +8,16 @@ class GeniusWebScrapper : WebScrapper {
 
     val logger by logger()
 
-    override fun scrapRelatedSong(document: Document): String {
+    override fun scrapRelatedSong(doc: Document): String {
         logger.info("scrapping a document")
-        val select = document.select("div[data-lyrics-container=true]")
-        val sb = StringBuilder()
-        select.forEach {elem ->
-            val textNodes = elem.textNodes()
-            textNodes.forEach{textNode ->
-                sb.append(textNode.text())
-                sb.append("\n")
-            }
-            sb.append("\n")
+        val lyricsContainers = doc.select("div[data-lyrics-container=true]")
+
+        val fullLyrics = lyricsContainers.joinToString("\n") { it.wholeText() }
+
+        return if (fullLyrics.contains("[Intro]")) {
+            fullLyrics.substring(fullLyrics.indexOf("[Intro]")).trim()
+        } else {
+            fullLyrics.trim()
         }
-        return sb.toString()
     }
 }
