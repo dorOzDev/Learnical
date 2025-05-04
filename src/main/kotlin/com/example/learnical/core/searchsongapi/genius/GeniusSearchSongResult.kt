@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 class GeniusSearchSongResult(@JsonProperty(value = "response") private val geniusSearchResult : GeniusSearchResultData) :
     SearchSongResult {
 
-    override fun getSongApiUrl(): String {
-        return geniusSearchResult.hits[0].hitResult.url
+    override fun getSongApiUrl(): String? {
+        return if(geniusSearchResult.hits.size > 0) {
+            geniusSearchResult.hits[0].hitResult.url
+        } else return null
     }
 }

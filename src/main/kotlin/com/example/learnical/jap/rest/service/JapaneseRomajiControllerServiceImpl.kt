@@ -34,12 +34,12 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
         logger.info("search for song: $songName")
         val searchSongLyricLink = searchSongApi.searchSongLyricLink(songName)
 
-        return if(searchSongLyricLink == null) {
+        return if(searchSongLyricLink == null || searchSongLyricLink.getSongApiUrl() == null) {
             logger.info(String.format("couldn't find a song with name: %s", songName))
             RomajiControllerService.Constant.SONG_NOT_FOUND_PAIR
         } else {
             logger.info("getting html page for song $songName, from link ${searchSongLyricLink.getSongApiUrl()}")
-            val document = Jsoup.connect(searchSongLyricLink.getSongApiUrl())
+            val document = Jsoup.connect(searchSongLyricLink.getSongApiUrl()!!)
                 .userAgent("Mozilla")
                 .header("Accept-Language", "en-US,en;q=0.9")
                 .header("Accept", "text/html")
@@ -48,8 +48,8 @@ class JapaneseRomajiControllerServiceImpl(val lyricProcessor: JapaneseLyricsProc
                 .header("Cache-Control", "max-age=0")
                 .referrer("https://www.google.com")
                 .get()
-            val second = SearchSongData(songName, searchSongLyricLink.getSongApiUrl(), webScrapper.scrapRelatedSong(document))
-            return Pair(true, second)
+            val second = SearchSongData(songName, searchSongLyricLink.getSongApiUrl()!!, webScrapper.scrapRelatedSong(document))
+            Pair(true, second)
         }
     }
 }

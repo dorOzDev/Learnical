@@ -6,7 +6,7 @@ package com.example.learnical.core.searchsongapi.model
 interface SearchSongResult {
 
     /**
-     * returns the url of the related song from the api call to the 3rd part api service
+     * returns the url of the related song from the api call to the 3rd part api service, a null is returned if no results were found
      * */
-    fun getSongApiUrl() : String
+    fun getSongApiUrl() : String?
 }
