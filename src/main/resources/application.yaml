@@ -14,6 +14,9 @@ spring:
     user:
       name: admin
       password: admin
+    redis:
+        host: ${REDIS_HOST:localhost}
+        port: ${REDIS_PORT:6379}
 
 server:
   address: ${APP_SERVER_ADD:0.0.0.0}

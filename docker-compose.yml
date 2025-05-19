@@ -10,7 +10,23 @@ services:
       - "8088:8080"
     command:
       - start-dev
-
+  redis:
+    image: redis:7.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: >
+      redis-server
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --dir /data
+      --dbfilename dump.rdb
+      --appendonly no
+volumes:
+  redis-data:
 #  app:
 #    build: .
 #    ports:

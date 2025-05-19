@@ -5,7 +5,7 @@ import com.example.learnical.core.searchsongapi.AbstractSearchSongsApi
 import com.example.learnical.core.searchsongapi.AuthorizationStore
 import com.example.learnical.core.searchsongapi.genius.GeniusSearchSongsApi.GeniusApiUrl.ROMANIZED
 import com.example.learnical.core.searchsongapi.genius.model.GeniusJWT
-import com.example.learnical.core.searchsongapi.model.SearchSongResult
+import com.example.learnical.core.searchsongapi.model.ApiSearchSongResult
 import com.example.learnical.core.user.UserService
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -17,7 +17,7 @@ class GeniusSearchSongsApi(restTemplate: RestTemplate, val geniusStore: Authoriz
 
     val logger by logger()
 
-    override fun searchSongLyricLink(songName: String): SearchSongResult? {
+    override fun searchSongLyricLink(songName: String): ApiSearchSongResult? {
         logger.info("searching for link of song: $songName")
         val headers : HttpHeaders = createHeaders()
         val entity = HttpEntity("", headers)

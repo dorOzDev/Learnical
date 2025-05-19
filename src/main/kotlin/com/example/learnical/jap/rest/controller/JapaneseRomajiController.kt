@@ -22,10 +22,10 @@ class JapaneseRomajiController(val controllerService : JapaneseRomajiControllerS
         logger.info("searching song: $songName")
         try {
             val res = controllerService.searchSongToRomaji(songName)
-            return if(!res.first) {
+            return if(!res.found) {
                 ResponseEntity.notFound().build()
             } else {
-                ResponseEntity.ok(res.second)
+                ResponseEntity.ok(res.data)
             }
         } catch (e : Exception) {
             logger.error("something went wrong with searching for the song name: ${e.message}")
